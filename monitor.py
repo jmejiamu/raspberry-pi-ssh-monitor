@@ -37,7 +37,7 @@ with open(LOG_FILE, "r") as file:
 
         show_event(detection)
 
-        if detection["severity"] == "high":
+        if detection["should_alert"]:
             show_alert(detection)
 
         save_event(detection)
