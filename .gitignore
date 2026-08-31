@@ -1,0 +1,21 @@
+# General security events
+security_events.jsonl
+
+
+# Python
+__pycache__/
+*.pyc
+
+
+# Enviroment variables / secret
+.env
+*.env
+
+# Virtual enviroment
+venv/
+.venv/
+
+
+# Editor files
+*.swp
+
