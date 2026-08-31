@@ -1,14 +1,14 @@
 import unittest
 from datetime import datetime, timedelta
 
-from detector import detect_threat, failed_attempts
+from detector import detect_threat, failed_attempts, alerted_ips
 
 
 class TestThreatDetector(unittest.TestCase):
 
     def setUp(self):
-        # Reset attempts before every test
         failed_attempts.clear()
+        alerted_ips.clear()
 
     def test_single_attempt_is_medium(self):
         event = {

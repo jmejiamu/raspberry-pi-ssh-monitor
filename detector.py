@@ -3,6 +3,7 @@ from datetime import timedelta
 
 
 failed_attempts = defaultdict(list)
+alerted_ips = set()
 
 
 def detect_threat(event):
@@ -27,11 +28,19 @@ def detect_threat(event):
         "username": event["username"],
         "ip_address": ip_address,
         "attempt_count": attempt_count,
-        "timestamp": timestamp.isoformat()
+        "timestamp": timestamp.isoformat(),
+        "should_alert": False
     }
 
     if attempt_count >= 5:
         detection["type"] = "possible_brute_force"
         detection["severity"] = "high"
+
+        if ip_address not in alerted_ips:
+            detection["should_alert"] = True
+            alerted_ips.add(ip_address)
+
+    if attempt_count < 5:
+        alerted_ips.discard(ip_address)
 
     return detection
