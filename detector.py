@@ -1,5 +1,5 @@
 from collections import defaultdict
-from datetime import timedelta
+from datetime import timedelta, timezone
 
 
 failed_attempts = defaultdict(list)
@@ -28,7 +28,9 @@ def detect_threat(event):
         "username": event["username"],
         "ip_address": ip_address,
         "attempt_count": attempt_count,
-        "timestamp": timestamp.isoformat(),
+        "timestamp": timestamp.astimezone(timezone.utc)
+                              .isoformat()
+                              .replace("+00:00", "Z"),
         "should_alert": False
     }
 
