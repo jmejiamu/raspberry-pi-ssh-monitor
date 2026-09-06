@@ -4,6 +4,7 @@ import time
 from parser import parse_ssh_failed_login
 from detector import detect_threat
 from display import show_banner, show_status, show_event, show_alert
+from api_client import send_event
 
 
 LOG_FILE = "/var/log/auth.log"
@@ -41,3 +42,5 @@ with open(LOG_FILE, "r") as file:
             show_alert(detection)
 
         save_event(detection)
+
+        send_event(detection)
